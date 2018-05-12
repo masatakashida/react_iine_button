@@ -5,7 +5,9 @@ class LikeButton extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      hovered: false
+      hovered: false,
+      count: 999,
+      liked: false
     }
   }
   styles() {
@@ -67,6 +69,13 @@ class LikeButton extends React.Component {
     this.setState({hovered: false});
   }
 
+  onClick() {
+    this.setState({
+      count: this.state.count + (this.state.liked ? -1 : 1),
+      liked: !this.state.liked
+    });
+  }
+
   render() {
     const styles = this.styles();
     const likeStyle = this.state.hovered ? {...styles.like, ...styles.likeHover} : styles.like;
@@ -76,9 +85,11 @@ class LikeButton extends React.Component {
         <span
           style={likeStyle}
           onMouseEnter={this.onMouseEnter.bind(this)}
-          onMouseLeave={this.onMouseLeave.bind(this)}>いいね！</span>
+          onMouseLeave={this.onMouseLeave.bind(this)}
+          onClick={this.onClick.bind(this)}>{this.state.liked ? "✔ " : ""}いいね！</span>
         <span style={styles.counter}>
-          <span style={styles.counterBefore}>{" "}</span>999
+          <span style={styles.counterBefore}>{" "}</span>
+          {this.state.count}
         </span>
       </span>
     );
