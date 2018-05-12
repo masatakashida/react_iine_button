@@ -2,6 +2,12 @@ import React from "react";
 import ReactDom from "react-dom";
 
 class LikeButton extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      hovered: false
+    }
+  }
   styles() {
     return {
       container: {
@@ -51,13 +57,29 @@ class LikeButton extends React.Component {
     };
   }
 
+  // カーソル乗った時のイベントハンドラ
+  onMouseEnter() {
+    this.setState({hovered: true});
+  }
+
+  // カーソルが外れた時のイベントハンドラ
+  onMouseLeave() {
+    this.setState({hovered: false});
+  }
+
   render() {
     const styles = this.styles();
+    console.log(this.state);
     return (
       <span style={styles.container}>
-        <span style={styles.like}>いいね！</span>
-        <span style={styles.counter}>
-          <span style={styles.counterBefore}>{" "}</span>999
+        <span 
+          style={styles.container}
+          onMouseEnter={this.onMouseEnter.bind(this)}
+          onMouseLeave={this.onMouseLeave.bind(this)}>
+          <span style={styles.like}>いいね！</span>
+          <span style={styles.counter}>
+            <span style={styles.counterBefore}>{" "}</span>999
+          </span>
         </span>
       </span>
     );
